@@ -4,7 +4,28 @@
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<title>Search page</title>
+		<link rel="stylesheet" href="styles/main.css"/>
+		<link rel="stylesheet" href="styles/index.css"/>
 	</head>
 	<body>
+		<main>
+			<h1>Search</h1>
+			<div id="search-bar">
+				<select name="search-engine" id="search-engine">
+					<option value="duckduckgo" selected>DuckDuckGo</option>
+					<option value="google">Google</option>
+				</select>
+				<form action="https://duckduckgo.com" method="GET" id="search-form">
+					<input type="text" name="q"/>
+					<button type="submit">Search</button>
+				</form>
+			</div>
+		</main>
+		<footer>
+			<a href="https://github.com/l0py2/search-page" target="_blank">
+				https://github.com/l0py2/search-page
+			</a>
+		</footer>
 	</body>
+	<script src="scripts/main.js"></script>
 </html>
