@@ -1,3 +1,7 @@
+'use strict'
+
+registerServiceWorker();
+
 const searchEngines = new Map();
 searchEngines.set('duckduckgo', 'https://duckduckgo.com');
 searchEngines.set('google', 'https://www.google.com/search');
@@ -22,3 +26,15 @@ searchEngineOption.addEventListener('input', event => {
 
 	searchForm.setAttribute('action', searchEngines.get(option));
 });
+
+async function registerServiceWorker() {
+	if('serviceWorker' in navigator) {
+		try {
+			const registration = navigator.serviceWorker.register('service_worker.js', {
+				scope: './'
+			});
+		}catch(error) {
+			console.error(`Service worker registration: ${error}`);
+		}
+	}
+}
