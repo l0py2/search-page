@@ -2,21 +2,32 @@
 
 registerServiceWorker();
 
-const searchEngines = new Map();
-searchEngines.set('duckduckgo', 'https://duckduckgo.com');
-searchEngines.set('google', 'https://www.google.com/search');
+const searchEngines = new Map([
+	['duckduckgo', 'https://duckduckgo.com'],
+	['google', 'https://www.google.com/search'],
+	['archwiki', 'https://wiki.archlinux.org/index.php'],
+	['wikipedia', 'https://en.wikipedia.org/w/index.php']
+]);
+
+const searchParameters = new Map([
+	['duckduckgo', 'q'],
+	['google', 'q'],
+	['archwiki', 'search'],
+	['wikipedia', 'search']
+]);
 
 const searchEngineOption = document.querySelector('#search-engine');
 const searchForm = document.querySelector('#search-form');
+const searchInput = document.querySelector('#search-input');
 
 const storageSearchEngine = localStorage.getItem('preferredSearchEngine');
 
 if(storageSearchEngine) {
 	searchEngineOption.value = storageSearchEngine;
 	searchForm.setAttribute('action', searchEngines.get(storageSearchEngine));
+	searchInput.setAttribute('name', searchParameters.get(storageSearchEngine));
 }else {
 	localStorage.setItem('preferredSearchEngine', 'duckduckgo');
-	searchForm.setAttribute('action', searchEngines.get('duckduckgo'));
 }
 
 searchEngineOption.addEventListener('input', event => {
@@ -25,12 +36,13 @@ searchEngineOption.addEventListener('input', event => {
 	localStorage.setItem('preferredSearchEngine', option);
 
 	searchForm.setAttribute('action', searchEngines.get(option));
+	searchInput.setAttribute('name', searchParameters.get(option));
 });
 
 async function registerServiceWorker() {
 	if('serviceWorker' in navigator) {
 		try {
-			const registration = navigator.serviceWorker.register('service_worker.js', {
+			navigator.serviceWorker.register('service_worker.js', {
 				scope: './'
 			});
 		}catch(error) {
